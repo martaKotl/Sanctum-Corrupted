@@ -25,6 +25,10 @@ def create_training_entities():
     enemy = Cat((0, 0), [], 'Training Cat', 100, [], tier=0, school=School.MAGICAL)
     enemy.new_game_starting_package()
 
+    # Override health for training purposes
+    enemy.max_health = 60
+    enemy.health = 60
+
     return player, enemy
 
 
@@ -49,7 +53,7 @@ def simulate_battle_turn(ai: EnemyAI, player: Player, enemy, training_data: list
         elif enemy.health <= 0:
             reward = -1.0
         else:
-            reward = (60 - player.health) * 0.01 - (15 - enemy.health) * 0.02
+            reward = (player.max_health - player.health) * 0.01 - (enemy.max_health - enemy.health) * 0.02
 
     training_data.append((state_before, action, reward))
 
@@ -81,6 +85,9 @@ def train_ai():
 
         enemy = Cat((0, 0), [], 'Training Cat', 100, [], tier=0, school=School.MAGICAL)
         enemy.new_game_starting_package()
+        # Ensure training enemy uses overridden HP
+        enemy.max_health = 60
+        enemy.health = 60
         enemy.ai = ai
 
         player.new_game_starting_package()
