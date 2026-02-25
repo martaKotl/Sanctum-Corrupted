@@ -61,7 +61,8 @@ class Cat(Enemy):
 
     def _calculate_health(self, tier: int) -> int:
         # Cat health: 15 -> 27 -> 40 (stronger enemy)
-        return 15 + (tier * 12) + (1 if tier == 2 else 0)
+        #return 15 + (tier * 12) + (1 if tier == 2 else 0)
+        return 60  # For testing purposes, set all cats to 60 health regardless of tier
 
     def get_max_health(self, tier: int) -> int:
         return self._calculate_health(tier)
